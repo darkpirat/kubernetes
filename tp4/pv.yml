@@ -3,17 +3,10 @@ kind: PersistentVolume
 metadata:
   name: pv-vol1
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteOnce
   capacity:
     storage: 1Gi
-  local:
+  hostPath:
     path: /data-pv
-  nodeAffinity:
-    required:
-      nodeSelectorTerms:
-      - matchExpressions:
-        - key: kubernetes.io/hostname
-          operator: In
-          values:
-          - example-node
