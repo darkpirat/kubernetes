@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: odoo-deployment
+  namespace: odoo-ns
+  labels:
+    app: odoo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: odoo
+  template:
+    metadata:
+      labels:
+        app: odoo
+    spec:
+      containers:
+      - name: odoo
+        image: odoo:latest
+        env:
+          - name: USER
+            value: toto
+          - name: PASSWORD
+            value: toto
+          - name: HOST
+            value: pg-cluster
+        volumeMounts:
+          - mountPath: /var/lib/odoo
+            name: odoo-data
+      volumes:
+      - name: odoo-data
+        hostPath:
+          path: /data
+          type: Directory 
